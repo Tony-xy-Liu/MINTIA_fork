@@ -1,5 +1,8 @@
 #!/bin/bash
 
+ENV_NAME=${1:=mintia}
+
+echo -e "\n### conda env: {$ENV_NAME} \n"
 echo -e "\n### Begin installing mintia...\n"
 
 # Add the launcher and the scripts to the PATH by .bashrc
@@ -13,7 +16,7 @@ source $CONDA_PREFIX/etc/profile.d/conda.sh
 echo -e "### Conda environment installing... \n"
 if [ $(conda env list | grep 'mintia' | wc -l) = 0 ]
 then
-    conda env create --file $HERE/environment.yaml
+    mamba env create -n $ENV_NAME --file $HERE/environment.yaml
     
     if [ $? = 0 ] 
     then 
@@ -22,7 +25,7 @@ then
         # Conda environment refinement
         echo -e "### Conda environment configuration...\n"
     
-        conda activate mintia
+        conda activate $ENV_NAME
     else
         code=$?
         echo "FAIL : Conda environment installation FAILED."
@@ -33,7 +36,7 @@ else
     echo -e "Conda environment already installed. \n"
     echo -e "### Conda environment configuration...\n"
     
-    conda activate mintia
+    conda activate $ENV_NAME
 fi
 
 if [ $? = 0 ]
@@ -58,7 +61,7 @@ if [ $? = 0 ]
 then
     echo -e "### Conda environment configured.\n"
     
-    conda activate mintia
+    conda activate $ENV_NAME
 else
     code=$?
     echo "FAIL : Conda environment configuration FAILED."

@@ -937,13 +937,13 @@ sub assemble {
 	foreach my $k (sort keys(%h_sample)) {
 		my $zip = "cat ";
 		my $filetype = `file -bsiL $h_sample{$k}{"R1_C"}`;
-	   	if($filetype =~ /application\/x\-gzip/) { $zip = "gunzip -c "; }
+	   	if($filetype =~ /application\/.*gzip/) { $zip = "gunzip -c "; }
 		open(READ1, "$zip $h_sample{$k}{'R1_C'} |") || die "Error: Unabled to open $h_sample{$k}{'R1_C'}.";
 
 		if(exists($h_sample{$k}{"R2"})) {
 		  $zip = "cat ";
 		  $filetype = `file -bsiL $h_sample{$k}{'R2_C'}`;
-		  if($filetype =~ /application\/x\-gzip/) { $zip = "gunzip -c "; }
+		  if($filetype =~ /application\/.*gzip/) { $zip = "gunzip -c "; }
 		  open(READ2, "$zip $h_sample{$k}{'R2_C'} |") || die "Error: Unabled to open $h_sample{$k}{'R2_C'}.";
 		}
 
@@ -2054,7 +2054,7 @@ sub annotate {
 	my %h_fasta = ();
 	my $zip = "cat ";
 	my $filetype = `file -bsiL $inputSeq`;
-	if($filetype =~ /application\/x\-gzip/) { $zip = "gunzip -c "; }
+	if($filetype =~ /application\/.*gzip/) { $zip = "gunzip -c "; }
     open(INPUT, "$zip $inputSeq |") || die "Error: Unabled to open $inputSeq.";
 	my $currentName = "";
 	while(my $line = <INPUT>) {
